@@ -11,8 +11,11 @@
 <div id="chartdiv"></div>
 
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+<script src="//cdn.amcharts.com/lib/5/geodata/data/countries2.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 
 
 <script src="/assets/main.js"></script>
@@ -22,14 +25,17 @@
 
 <script type="text/javascript">
 
-var root = am5.Root.new("chartdiv");
-var chart = root.container.children.push(
+const root = am5.Root.new("chartdiv");
+root.setThemes([
+  am5themes_Animated.new(root)
+]);
+const chart = root.container.children.push(
   am5map.MapChart.new(root, {
     projection: am5map.geoNaturalEarth1()
   })
 );
 
-var polygonSeries = chart.series.push(
+const polygonSeries = chart.series.push(
   am5map.MapPolygonSeries.new(root, {
     geoJSON: am5geodata_worldLow
   })
@@ -48,29 +54,75 @@ polygonSeries.mapPolygons.template.setAll({
 });
 
 
+const continents = {
+  "AF": 0,
+  "AN": 1,
+  "AS": 2,
+  "EU": 3,
+  "NA": 4,
+  "OC": 5,
+  "SA": 6
+}
+const colors = am5.ColorSet.new(root, {
+  baseColor: am5.color(0xFF0),
+  // colors: [
+  //   am5.color(0xF00),
+  //   am5.color(0x0F0),
+  //   am5.color(0x00F),
+  //   am5.color(0xFF0),
+  //   am5.color(0x0FF),
+  //   am5.color(0xF0F),
+  //   am5.color(0xFFF),
+  // ],
+});
+
+function getContinent(countryID) {
+  const country = am5geodata_data_countries2[countryID];
+  return continents[country.continent_code]
+}
+
+function getColorForCountry(countryID) {
+  const continent = getContinent(countryID)
+  return colors.getIndex(continent)
+}
+
+
 let selectedCountries = new Set()
+let futureCountries = new Set()
 
 function getDataFromCountries(countryIDs) {
-  return countryIDs.map(countryID => ({
-    id: countryID,
-    polygonSettings: {
-      fill: am5.color(0xFF3C38)
-    },
-  }))
+  return countryIDs.map(countryID => {
+    let color = getColorForCountry(countryID)
+    if (futureCountries.has(countryID)) {
+      color = am5.color(0xFF3C38)
+    }
+    return {
+      id: countryID,
+      polygonSettings: {
+        fill: color,
+      },
+    }
+  })
 }
 
 polygonSeries.mapPolygons.template.states.create("hover", {
-  fill: am5.color(0xFF3C38),
-  fillOpacity: 0.9,
+  fillOpacity: 0.5,
 });
 
 polygonSeries.mapPolygons.template.events.on("click", function(ev) {
   let countryID = ev.target.dataItem.get("id");
 
-  if (selectedCountries.has(countryID)) {
-    selectedCountries.delete(countryID);
+  const e = ev.originalEvent
+
+  let countryList = selectedCountries
+  if (e.metaKey) {
+    countryList = futureCountries
+  }
+
+  if (countryList.has(countryID)) {
+    countryList.delete(countryID);
   } else {
-    selectedCountries.add(countryID);
+    countryList.add(countryID);
   }
 
   updateMap()
@@ -82,6 +134,22 @@ function updateMap() {
 
   const fragment = selectedCountriesArray.join(',')
   window.location.hash = fragment;
+}
+
+function highlightAllCountries() {
+  // Set up data for countries
+  const data = [];
+  for(let id in am5geodata_data_countries2) {
+    if (am5geodata_data_countries2.hasOwnProperty(id)) {
+      data.push({
+        id: id,
+        polygonSettings: {
+          fill: getColorForCountry(id),
+        }
+      });
+    }
+  }
+  polygonSeries.data.setAll(data);
 }
 
 
