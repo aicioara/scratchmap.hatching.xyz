@@ -1,0 +1,103 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scratch map</title>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+
+<body>
+
+<div id="chartdiv"></div>
+
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+
+
+<script src="/assets/main.js"></script>
+
+
+
+
+<script type="text/javascript">
+
+var root = am5.Root.new("chartdiv");
+var chart = root.container.children.push(
+  am5map.MapChart.new(root, {
+    projection: am5map.geoNaturalEarth1()
+  })
+);
+
+var polygonSeries = chart.series.push(
+  am5map.MapPolygonSeries.new(root, {
+    geoJSON: am5geodata_worldLow
+  })
+);
+
+
+polygonSeries.mapPolygons.template.setAll({
+  stroke: am5.color(0xffffff),
+  strokeWidth: 1,
+  fillOpacity: 1.0,
+
+  tooltipText: "{name}",
+  templateField: "polygonSettings",
+  interactive: true,
+});
+
+
+let selectedCountries = new Set()
+
+function getDataFromCountries(countryIDs) {
+  return countryIDs.map(countryID => ({
+    id: countryID,
+    polygonSettings: {
+      fill: am5.color(0xFF3C38)
+    },
+  }))
+}
+
+polygonSeries.mapPolygons.template.states.create("hover", {
+  fill: am5.color(0xFF3C38),
+  fillOpacity: 0.9,
+});
+
+polygonSeries.mapPolygons.template.events.on("click", function(ev) {
+  let countryID = ev.target.dataItem.get("id");
+
+  if (selectedCountries.has(countryID)) {
+    selectedCountries.delete(countryID);
+  } else {
+    selectedCountries.add(countryID);
+  }
+
+  updateMap()
+});
+
+function updateMap() {
+  const selectedCountriesArray = Array.from(selectedCountries)
+  polygonSeries.data.setAll(getDataFromCountries(selectedCountriesArray))
+
+  const fragment = selectedCountriesArray.join(',')
+  window.location.hash = fragment;
+}
+
+
+function init() {
+  let fragment = window.location.hash;
+  if (fragment.startsWith('#')) {
+    fragment = fragment.slice(1)
+  }
+  const selectedCountriesArray = fragment.split(',').filter(d => d.length == 2)
+  selectedCountries = new Set(selectedCountriesArray)
+  updateMap()
+}
+
+init();
+
+
+</script>
+
+</body>
+</html>
