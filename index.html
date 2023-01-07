@@ -33,7 +33,7 @@
     <ul class="navbar-nav mr-auto">
     </ul>
     <ul class="form-inline my-2 my-lg-0">
-      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Download</button>
+      <!-- <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" onclick="doDownload()">Download</button> -->
     </ul>
   </div>
 </nav>
@@ -46,6 +46,7 @@
 <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
 <script src="//cdn.amcharts.com/lib/5/geodata/data/countries2.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/plugins/exporting.js"></script>
 
 
 <script src="/assets/main.js"></script>
@@ -185,8 +186,21 @@ function highlightAllCountries() {
   polygonSeries.data.setAll(data);
 }
 
+let exporting = null;
+
+function doDownload(ev) {
+  console.log(exporting)
+}
 
 function init() {
+  exporting = am5plugins_exporting.Exporting.new(root, {
+    menu: am5plugins_exporting.ExportingMenu.new(root, {}),
+    pngOptions: {
+      quality: 0.8,
+      maintainPixelRatio: true
+    }
+  });
+
   let fragment = window.location.hash;
   if (fragment.startsWith('#')) {
     fragment = fragment.slice(1)
