@@ -7,10 +7,12 @@ https://scratchmap.hatching.xyz/
 - Add Search functionality
 - Add Share functionality
 - Move download functionality to the download button
+- Introduce zoom functionality
+
+## Performance
+- Load the amcharts locally
 
 ## Bugs
-- Fix the map zoom reset bug
-- Fix scroll that was added after adding navbar
 
 ## Design
 - Fix logo background color

@@ -19,27 +19,28 @@
 
 <body>
 
-<!-- TODO: Change the logo to match navbar (#f8f9fa!important) -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #E9E7E7!important">
-  <a class="navbar-brand" href="javascript:void(0);">
-    <img src="/assets/favicon/android-chrome-512x512.png" width="30" height="30" class="d-inline-block align-top" alt="">
+<main>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="javascript:void(0);">
+      <img src="/assets/favicon/android-chrome-512x512.png" width="30" height="30" class="d-inline-block align-top" alt="">
 
-  </a>
-  <a class="navbar-brand" href="javascript:void(0);">jScratch</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    </a>
+    <a class="navbar-brand" href="javascript:void(0);">jScratch</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-    </ul>
-    <ul class="form-inline my-2 my-lg-0">
-      <!-- <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" onclick="doDownload()">Download</button> -->
-    </ul>
-  </div>
-</nav>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+      </ul>
+      <ul class="form-inline my-2 my-lg-0">
+        <!-- <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" onclick="doDownload()">Download</button> -->
+      </ul>
+    </div>
+  </nav>
+  <div id="chartdiv" class="flex-fill"></div>
+</main>
 
-<div id="chartdiv"></div>
 
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
