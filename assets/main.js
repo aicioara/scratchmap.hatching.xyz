@@ -1,3 +1,10 @@
+// ------------- State
+
+let selectedCountries = new Set()
+let futureCountries = new Set()
+
+// ------------- Amcharsts
+
 const root = am5.Root.new("chartdiv");
 root.setThemes([
   am5themes_Animated.new(root),
@@ -41,8 +48,7 @@ const continents = {
   "SA": 6,
 }
 const colors = am5.ColorSet.new(root, {});
-let selectedCountries = new Set()
-let futureCountries = new Set()
+
 
 function getContinent(countryID) {
   const country = am5geodata_data_countries2[countryID];
@@ -74,6 +80,8 @@ polygonSeries.mapPolygons.template.states.create("hover", {
 });
 
 polygonSeries.mapPolygons.template.events.on("click", function(ev) {
+  const initialHash = window.location.hash
+
   let countryID = ev.target.dataItem.get("id");
 
   const e = ev.originalEvent
@@ -89,17 +97,19 @@ polygonSeries.mapPolygons.template.events.on("click", function(ev) {
     countryList.add(countryID);
   }
 
-  refreshMap()
+  updateURLFromCountries()
+
+  const newHash = window.location.hash
+  if (initialHash === newHash) {
+    // In cases where they are different, the refresh map is already triggered by the history listener
+    refreshMap()
+  }
 });
 
 function refreshMap() {
   const selectedCountriesArray = Array.from(selectedCountries)
-  const selectedAndFutureCountriesArray = selectedCountriesArray.concat(Array.from(futureCountries))
-
-  const fragment = selectedCountriesArray.join(',')
-  window.location.hash = fragment;
-
-  polygonSeries.data.setAll(getDataFromCountries(selectedAndFutureCountriesArray))
+  const futureCountriesArray = Array.from(futureCountries)
+  polygonSeries.data.setAll(getDataFromCountries(selectedCountriesArray.concat(futureCountriesArray)))
 }
 
 function highlightAllCountries() {
@@ -118,6 +128,53 @@ function highlightAllCountries() {
   polygonSeries.data.setAll(data);
 }
 
+
+// -------------- Public Methods
+
+
+function doClear() {
+  selectedCountries.clear()
+  futureCountries.clear()
+  updateURLFromCountries()
+  refreshMap()
+}
+
+function doUndo() {
+  history.back();
+}
+
+function doDownload() {
+  console.error("TODO")
+
+}
+
+
+// -------------- State manipulation
+
+function updateCountriesFromURL() {
+  let fragment = window.location.hash;
+  if (fragment.startsWith('#')) {
+    fragment = fragment.slice(1)
+  }
+  const selectedCountriesArray = fragment.split(',').filter(d => d.length == 2)
+  selectedCountries = new Set(selectedCountriesArray)
+}
+
+function updateURLFromCountries() {
+  const selectedCountriesArray = Array.from(selectedCountries)
+  const fragment = selectedCountriesArray.join(',')
+  window.location.hash = fragment;
+}
+
+window.addEventListener('hashchange', function (a, b, c, d) {
+    updateCountriesFromURL()
+    refreshMap();
+});
+
+
+
+// -------------- Initialization
+
 function init() {
   const exporting = am5plugins_exporting.Exporting.new(root, {
     menu: am5plugins_exporting.ExportingMenu.new(root, {}),
@@ -127,12 +184,7 @@ function init() {
     }
   });
 
-  let fragment = window.location.hash;
-  if (fragment.startsWith('#')) {
-    fragment = fragment.slice(1)
-  }
-  const selectedCountriesArray = fragment.split(',').filter(d => d.length == 2)
-  selectedCountries = new Set(selectedCountriesArray)
+  updateCountriesFromURL();
   refreshMap()
 }
 
