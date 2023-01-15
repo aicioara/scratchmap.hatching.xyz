@@ -13,9 +13,12 @@ const chart = root.container.children.push(
   am5map.MapChart.new(root, {
     projection: am5map.geoNaturalEarth1(),
     panX: "rotateX",
-    panY: "none",
-    minZoomLevel: 1,
-    maxZoomLevel: 1,
+  })
+);
+
+chart.series.push(
+  am5map.MapPolygonSeries.new(root, {
+    geoJSON: am5geodata_worldLow
   })
 );
 
