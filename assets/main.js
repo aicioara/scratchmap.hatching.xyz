@@ -3,12 +3,14 @@
 let selectedCountries = new Set()
 let futureCountries = new Set()
 
-// ------------- Amcharsts
+// ------------- Amcharts
 
 const root = am5.Root.new("chartdiv");
 root.setThemes([
   am5themes_Animated.new(root),
 ]);
+// root._logo.dispose();
+
 const chart = root.container.children.push(
   am5map.MapChart.new(root, {
     projection: am5map.geoNaturalEarth1(),

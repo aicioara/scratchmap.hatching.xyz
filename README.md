@@ -9,7 +9,6 @@ https://scratchmap.hatching.xyz/
 - Remove amCharts Logo
 
 ## Performance
-- Load the amcharts locally
 
 ## Bugs
 - Stop panning up-down past end line
