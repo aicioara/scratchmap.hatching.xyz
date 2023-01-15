@@ -18,7 +18,7 @@ const chart = root.container.children.push(
   })
 );
 
-chart.series.push(
+const oldSeries = chart.series.push(
   am5map.MapPolygonSeries.new(root, {
     geoJSON: am5geodata_worldLow
   })
@@ -52,6 +52,7 @@ const continents = {
   "OC": 5,
   "SA": 6,
 }
+const countries = {}
 const colors = am5.ColorSet.new(root, {});
 
 
@@ -133,6 +134,13 @@ function highlightAllCountries() {
   polygonSeries.data.setAll(data);
 }
 
+function zoomToCountry(countryName) {
+  const country = countries[countryName]
+  if (!country) {
+    console.error("Could not find country")
+  }
+  polygonSeries.zoomToDataItem(country)
+}
 
 // -------------- Public Methods
 
@@ -169,7 +177,16 @@ function doCopyShare() {
   setTimeout(() => {
     buttonCopyShare.innerHTML = "Copy"
   }, 1000)
+}
 
+function doNavigate() {
+  const inputCountrySearch = document.getElementById("inputCountrySearch")
+  const countryValue = inputCountrySearch.value
+  if (countryValue.trim() === "") {
+    chart.goHome()
+    return
+  }
+  zoomToCountry(countryValue)
 }
 
 
@@ -217,6 +234,14 @@ function init() {
   updateCountriesFromURL();
   updateModalFromURL()
   refreshMap()
+
+  setTimeout(() => {
+    for (let idx in polygonSeries.data._values) {
+      const countryPoligon = polygonSeries.mapPolygons._values[idx]
+      const id = polygonSeries.data._values[idx]['id']
+      countries[id] = countryPoligon.dataItem
+    }
+  }, 0)
 }
 
 init();
