@@ -38,7 +38,9 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="javascript:doDownload();">Export to PNG</a></li>
-            <li><a class="dropdown-item" href="javascript:doDownload();" data-bs-toggle="modal" data-bs-target="#shareModal">Share</a></li>
+            <li><a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#shareModal">Share</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#creditsModal">Credits</a></li>
           </ul>
         </li>
       </ul>
@@ -84,6 +86,36 @@
             <button class="btn btn-outline-success" id="buttonCopyShare" onClick="doCopyShare()" type="button">Copy</button>
           </div>
         </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="creditsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Credits</h5>
+        <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6>About</h6>
+        <p>This scratch map project was developed entirely live on Twitch at <a href="https://www.twitch.tv/andreicioara">https://www.twitch.tv/andreicioara</a>. Subscribe and join me for my next project.</p>
+        <h6>Contributors</h6>
+        <ul>
+          <li>Development by <a href="https://andrei.cioara.me/">Andrei Cioara</a></li>
+          <li>Logo by Laura</li>
+        </ul>
+        <h6>Librariers</h6>
+        <ul>
+          <li>Charts by <a href="https://www.amcharts.com/">amCharts</a></li>
+          <li>CSS using <a href="https://getbootstrap.com/">Bootstrap</a></li>
+        </ul>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
