@@ -143,6 +143,10 @@ function doUndo() {
   history.back();
 }
 
+function doRedo() {
+  history.forward();
+}
+
 function doDownload() {
   console.error("TODO")
 
