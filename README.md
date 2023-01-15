@@ -3,10 +3,9 @@
 https://scratchmap.hatching.xyz/
 
 ## Features
-- Move download functionality to the download button
 - Add Search functionality
+- Move download functionality to the download button
 - Add better UX for the copy button of share functionality -> Fireworks
-- Remove amCharts Logo
 
 ## Performance
 
@@ -16,4 +15,4 @@ https://scratchmap.hatching.xyz/
 ## Design
 - Fix logo background color
 - Find a final name
-
+- Remove amCharts Logo
