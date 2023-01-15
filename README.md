@@ -3,8 +3,8 @@
 https://scratchmap.hatching.xyz/
 
 ## Features
-- Add Search functionality
 - Add Share functionality
+- Add Search functionality
 - Move download functionality to the download button
 - Introduce zoom functionality
 - Add Credits

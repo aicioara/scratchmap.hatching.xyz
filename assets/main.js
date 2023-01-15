@@ -149,6 +149,21 @@ function doRedo() {
 
 function doDownload() {
   console.error("TODO")
+}
+
+function doCopyShare() {
+  const inputURL = document.getElementById("inputURL")
+  const buttonCopyShare = document.getElementById("buttonCopyShare")
+  const url = inputURL.value
+
+  if (!navigator.clipboard) {
+    alert("Clipboard not available")
+  }
+  navigator.clipboard.writeText(url)
+  buttonCopyShare.innerHTML = "Copied!"
+  setTimeout(() => {
+    buttonCopyShare.innerHTML = "Copy"
+  }, 1000)
 
 }
 
@@ -170,8 +185,14 @@ function updateURLFromCountries() {
   window.location.hash = fragment;
 }
 
+function updateModalFromURL() {
+  const inputURL = document.getElementById("inputURL")
+  inputURL.value = window.location
+}
+
 window.addEventListener('hashchange', function (a, b, c, d) {
     updateCountriesFromURL()
+    updateModalFromURL()
     refreshMap();
 });
 
@@ -189,6 +210,7 @@ function init() {
   });
 
   updateCountriesFromURL();
+  updateModalFromURL()
   refreshMap()
 }
 
