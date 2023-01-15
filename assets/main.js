@@ -1,10 +1,14 @@
 const root = am5.Root.new("chartdiv");
 root.setThemes([
-  am5themes_Animated.new(root)
+  am5themes_Animated.new(root),
 ]);
 const chart = root.container.children.push(
   am5map.MapChart.new(root, {
-    projection: am5map.geoNaturalEarth1()
+    projection: am5map.geoNaturalEarth1(),
+    panX: "rotateX",
+    panY: "none",
+    minZoomLevel: 1,
+    maxZoomLevel: 1,
   })
 );
 
@@ -34,7 +38,7 @@ const continents = {
   "EU": 3,
   "NA": 4,
   "OC": 5,
-  "SA": 6
+  "SA": 6,
 }
 const colors = am5.ColorSet.new(root, {});
 let selectedCountries = new Set()
@@ -85,17 +89,17 @@ polygonSeries.mapPolygons.template.events.on("click", function(ev) {
     countryList.add(countryID);
   }
 
-  updateMap()
+  refreshMap()
 });
 
-function updateMap() {
+function refreshMap() {
   const selectedCountriesArray = Array.from(selectedCountries)
-  const allCountriesArray = selectedCountriesArray.concat(Array.from(futureCountries))
+  const selectedAndFutureCountriesArray = selectedCountriesArray.concat(Array.from(futureCountries))
 
   const fragment = selectedCountriesArray.join(',')
   window.location.hash = fragment;
 
-  polygonSeries.data.setAll(getDataFromCountries(allCountriesArray))
+  polygonSeries.data.setAll(getDataFromCountries(selectedAndFutureCountriesArray))
 }
 
 function highlightAllCountries() {
@@ -129,7 +133,7 @@ function init() {
   }
   const selectedCountriesArray = fragment.split(',').filter(d => d.length == 2)
   selectedCountries = new Set(selectedCountriesArray)
-  updateMap()
+  refreshMap()
 }
 
 init();
