@@ -3,11 +3,11 @@
 https://scratchmap.hatching.xyz/
 
 ## Features
-- Add button for the map clearance
 - Add Search functionality
 - Add Share functionality
 - Move download functionality to the download button
 - Introduce zoom functionality
+- Add Credits
 
 ## Performance
 - Load the amcharts locally

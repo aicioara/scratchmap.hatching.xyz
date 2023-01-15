@@ -10,10 +10,14 @@ main {
   flex-direction: column;
 }
 
-.container {
-}
-
 .flex-fill {
   flex:1 1 auto;
 }
 
+
+/* Bootstrap addons */
+
+.dropdown-item.dropdown-item-danger:hover{
+  background-color: var(--danger) !important;
+  color: white;
+}

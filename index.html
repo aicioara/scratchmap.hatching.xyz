@@ -31,11 +31,34 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            File
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="javascript:doDownload();">Export Map</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Edit
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="javascript:doUndo();">Undo</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item dropdown-item-danger" href="javascript:doClear();">Clear Map</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
       </ul>
       <ul class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-warning my-2 my-sm-0 mx-1" type="submit" onclick="doUndo()">Undo</button>
-        <button class="btn btn-outline-danger my-2 my-sm-0 mx-1" type="submit" onclick="doClear()">Clear Map</button>
         <button class="btn btn-outline-primary my-2 my-sm-0 mx-1" type="submit" onclick="doDownload()">Download</button>
       </ul>
     </div>
@@ -44,6 +67,8 @@
 </main>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
