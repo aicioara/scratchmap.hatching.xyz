@@ -38,6 +38,7 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="javascript:doDownload();">Export to PNG</a></li>
+            <li><a class="dropdown-item" href="javascript:doDownload();" data-bs-toggle="modal" data-bs-target="#shareModal">Share</a></li>
           </ul>
         </li>
       </ul>
@@ -60,14 +61,14 @@
       <ul class="navbar-nav mr-auto">
       </ul>
       <ul class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-success my-2 my-sm-0 mx-1" type="submit" data-bs-toggle="modal" data-bs-target="#exampleModal">Share</button>
+        <button class="btn btn-outline-success my-2 my-sm-0 mx-1" type="submit" data-bs-toggle="modal" data-bs-target="#shareModal">Share</button>
       </ul>
     </div>
   </nav>
   <div id="chartdiv" class="flex-fill"></div>
 </main>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">

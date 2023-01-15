@@ -3,11 +3,11 @@
 https://scratchmap.hatching.xyz/
 
 ## Features
-- Add Share functionality
 - Add Search functionality
 - Move download functionality to the download button
 - Introduce zoom functionality
 - Add Credits
+- Add better UX for the copy button of share functionality -> Fireworks
 
 ## Performance
 - Load the amcharts locally
